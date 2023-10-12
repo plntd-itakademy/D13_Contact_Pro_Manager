@@ -15,54 +15,60 @@
                 <h3>AJOUT D'UN CONTACT</h3>
             </div>
             <div class="card-content mt-3">
-                <div id="erreur" class="alert alert-danger mt-3">
-                    erreurs
-                </div>   
+                <% if (typeof errors !== "undefined" && errors.length > 0) { %>
+                    <div id="erreur" class="alert alert-danger mt-3">
+                        <ul class="mb-0">
+                            <% errors.forEach((error) => { %>
+                                <li><%= error %></li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                <% } %>
                 <form class="card-body" id="new-contact-form" method="post" action="/contact/new">
                  
                     <div class="mb-3">
                         <label for="lastName" class="form-label">Nom</label>
-                        <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Nom">
+                        <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Nom"<%= typeof data !== "undefined" && ` value=${data.lastname}` %>>
                     </div>
 
                     <div class="mb-3">
                         <label for="firstName" class="form-label">Prénom</label>
-                        <input type="text" class="form-control" name="firstName" id="firstName" placeholder="Prénom">
+                        <input type="text" class="form-control" name="firstName" id="firstName" placeholder="Prénom"<%= typeof data !== "undefined" && ` value=${data.firstname}` %>>
                     </div>
 
                     <div class="mb-3">
                         <label for="company" class="form-label">Société</label>
-                        <input type="text" class="form-control" name="company" id="company" placeholder="Société">
+                        <input type="text" class="form-control" name="company" id="company" placeholder="Société"<%= typeof data !== "undefined" && ` value=${data.company}` %>>
                     </div>
                     
                     <div class="mb-3">
                         <label for="address" class="form-label">Adresse</label>
-                        <input type="text" class="form-control" name="address" id="address" placeholder="Adresse">
+                        <input type="text" class="form-control" name="address" id="address" placeholder="Adresse"<%= typeof data !== "undefined" && ` value=${data.address}` %>>
                     </div>
                                         
                     <div class="mb-3">
                         <label for="phone" class="form-label">Tel</label>
-                        <input type="text" class="form-control" name="phone" id="phone" placeholder="Tel">
+                        <input type="text" class="form-control" name="phone" id="phone" placeholder="Tel"<%= typeof data !== "undefined" && ` value=${data.phone}` %>>
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">E-Mail</label>
-                        <input type="text" class="form-control" name="email" id="email" placeholder="E-Mail">
+                        <input type="text" class="form-control" name="email" id="email" placeholder="E-Mail"<%= typeof data !== "undefined" && ` value=${data.email}` %>>
                     </div>
 
                     <div class="mb-3">
                         <label for="sector" class="form-label">Secteur</label>
                         <select  name="sector" id="sector" class="form-select">
-                            <option value="industrie">Industrie</option>
-                            <option value="informatique">Informatique</option>
-                            <option value="sante">Santé</option>
-                            <option value="education">Education</option>
+                            <option value="industrie"<%= typeof data !== "undefined" && data.sector === "industrie" && " selected" %>>Industrie</option>
+                            <option value="informatique"<%= typeof data !== "undefined" && data.sector === "informatique" && " selected" %>>Informatique</option>
+                            <option value="sante"<%= typeof data !== "undefined" && data.sector === "sante" && " selected" %>>Santé</option>
+                            <option value="education"<%= typeof data !== "undefined" && data.sector === "education" && " selected" %>>Education</option>
                         </select>
                     </div>
 
                     <div class="mb-3">
                         <label for="status" class="form-label">Actif ?</label>
-                        <input type="checkbox" name="actif" id="actif">
+                        <input type="checkbox" name="active" id="active"<%= typeof data !== "undefined" && data.active === "on" && " checked" %>>
                     </div>
                     
                     <div class="d-grid gap-2 col-6 mx-auto">

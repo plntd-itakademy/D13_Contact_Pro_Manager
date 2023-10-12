@@ -21,44 +21,44 @@
                         
                         <tr>
                             <td width="30%">ID :</td>
-                            <td>1</td>
+                            <td><%= contact.id %></td>
                         </tr>
                         <tr>
                             <td width="30%">Nom :</td>
-                            <td>Rondeau</td>
+                            <td><%= contact.lastname %></td>
                         </tr>
                         <tr>
                             <td width="30%">Prénom :</td>
-                            <td>Julien</td>
+                            <td><%= contact.firstname %></td>
                         </tr>
                         <tr>
                             <td width="30%">Société :</td>
-                            <td>Apollo</td>
+                            <td><%= contact.company %></td>
                         </tr>
                         <tr>
                             <td width="30%">Adresse :</td>
-                            <td>96 Bd Marius Vivier Merle, 69003 Lyon</td>
+                            <td><%= contact.address %></td>
                         </tr>                            
                         <tr>
                             <td width="30%">Tel</td>
-                            <td>04 78 35 45 70</td>
+                            <td><%= contact.phone %></td>
                         </tr>     
                         <tr>
                             <td width="30%">Email</td>
-                            <td>rondeau@appolo.fr</td>
+                            <td><%= contact.email %></td>
                         </tr>     
                         <tr>
                             <td width="30%">Secteur</td>
-                            <td>Informatique</td>
+                            <td><%= contact.sector %></td>
                         </tr>     
                         <tr>
                             <td width="30%">Actif</td>
-                            <td>Oui</td>
+                            <td><%= contact.active ? "Oui" : "Non" %></td>
                         </tr> 
                         <tr>
                             <td colspan="2">
                                 <div class="d-grid gap-2 col-6 mx-auto">
-                                    <a href="/" id="retour" class="btn btn-dark">RETOUR</a>
+                                    <a href="/contact" id="retour" class="btn btn-dark">RETOUR</a>
                                 </div>
                             </td>
                         </tr> 

@@ -38,16 +38,16 @@
                         <tbody>
                             <% contacts.forEach((contact, index) => { %>
                                 <tr id="tr-<%= index %>">
-                                    <td>Richard</td>
-                                    <td>Nicolas</td>
-                                    <td>Campus Région</td>
-                                    <td>78 Rte de Paris, 69260 Charbonnières</td>
-                                    <td>04 26 73 66 76</td>
-                                    <td>Education</td>
+                                    <td><%= contact.lastname %></td>
+                                    <td><%= contact.firstname %></td>
+                                    <td><%= contact.company %></td>
+                                    <td><%= contact.address %></td>
+                                    <td><%= contact.phone %></td>
+                                    <td><%= contact.sector %></td>
                                     <td>
-                                        <a href="/contact/<%= contact.id ?>" id="a-view-<%= contact.id ?>" class="btn btn-primary">VOIR</a>
-                                        <a href="/contact/edit/<%= contact.id ?>" id="a-edit-<%= contact.id ?>" class="btn btn-warning">MODIFIER</a>
-                                        <button id="btn-delete-<%= contact.id ?>" data-id="<%= contact.id ?>" class="btn btn-danger btn-delete">SUPPRIMER</button>
+                                        <a href="/contact/<%= contact.id %>" id="a-view-<%= contact.id %>" class="btn btn-primary">VOIR</a>
+                                        <a href="/contact/edit/<%= contact.id %>" id="a-edit-<%= contact.id %>" class="btn btn-warning">MODIFIER</a>
+                                        <button id="btn-delete-<%= contact.id %>" data-id="<%= contact.id %>" class="btn btn-danger btn-delete">SUPPRIMER</button>
                                     </td>
                                 </tr>
                             <% }) %>
@@ -55,7 +55,7 @@
                     </table>
                 <% } else { %>
                     <div class="alert alert-info mt-3">
-                        <p>Vous n'avez pas encore de contact.</p>
+                        Vous n'avez pas encore de contact.
                     </div>
                 <% } %> 
             </div>

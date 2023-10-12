@@ -17,7 +17,7 @@
             <div class="card-content mt-3">
                 <% if (typeof errors !== "undefined" && errors.length > 0) { %>
                     <div id="erreur" class="alert alert-danger mt-3">
-                        <ul>
+                        <ul class="mb-0">
                             <% errors.forEach((error) => { %>
                                 <li><%= error %></li>
                             <% }) %>
@@ -27,12 +27,12 @@
                 <form class="card-body" id="edit-car-form" method="post" action="/connection">
                     <div class="mb-3">
                         <label for="lastName" class="form-label">Email</label>
-                        <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Email">
                     </div>
 
                     <div class="mb-3">
                         <label for="firstName" class="form-label">Mot de passe</label>
-                        <input type="text" class="form-control" name="password" id="password" placeholder="Mot de passe">
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Mot de passe">
                     </div>
 
                     <div class="d-grid gap-2 col-6 mx-auto">

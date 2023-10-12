@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+const crypto = require("crypto");
 
 const userSchema = mongoose.Schema({
-  name: {
+  lastname: {
     type: String,
     required: true,
   },
@@ -9,7 +10,7 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  mail: {
+  email: {
     type: String,
     required: true,
   },

@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 
+// Sector = Industrie, Informatique, Santé, Education
+
 const contactSchema = mongoose.Schema({
-  name: {
+  lastname: {
     type: String,
     required: true,
   },
@@ -17,16 +19,21 @@ const contactSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  tel: {
+  phone: {
     type: String,
     required: true,
   },
-  mail: {
+  email: {
     type: String,
     required: true,
   },
   sector: {
     type: String,
+    required: true,
+    enum: ["industrie", "informatique", "sante", "education"],
+  },
+  active: {
+    type: Boolean,
     required: true,
   },
 });

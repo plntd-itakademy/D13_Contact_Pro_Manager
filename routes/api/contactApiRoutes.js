@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const Task = require("../../models/task");
+const Contact = require("../../models/contact");
 
-router.route("/tasks").get((req, res) => {
-  Task.find()
+router.route("/").get((req, res) => {
+  Contact.find()
     .then((data) => res.status(200).json(data))
     .catch((error) => res.status(400).json(error));
 });
 
 router.route("/new").post((req, res) => {
-  let task = new Task(req.body);
+  const contact = new Contact(req.body);
 
-  task
+  contact
     .save()
     .then((data) => res.status(200).json(data))
     .catch((error) => res.status(400).json(error));
@@ -19,18 +19,21 @@ router.route("/new").post((req, res) => {
 
 router
   .route("/:id")
+
   .get((req, res) => {
-    Task.findOne({ _id: req.params.id })
+    Contact.findOne({ _id: req.params.id })
       .then((data) => res.status(200).json(data))
       .catch((error) => res.status(400).json(error));
   })
+
   .put((req, res) => {
-    Task.updateOne({ _id: req.params.id }, req.body)
+    Contact.updateOne({ _id: req.params.id }, req.body)
       .then((data) => res.status(200).json(data))
       .catch((error) => res.status(400).json(error));
   })
+
   .delete((req, res) => {
-    Task.deleteOne({ _id: req.params.id })
+    Contact.deleteOne({ _id: req.params.id })
       .then((data) => res.status(200).json(data))
       .catch((error) => res.status(400).json(error));
   });
