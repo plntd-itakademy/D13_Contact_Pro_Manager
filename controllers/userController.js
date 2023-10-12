@@ -1,16 +1,26 @@
 const User = require("../models/user");
-const bcrypt = require("bcrypt");
+const Contact = require("../models/contact");
+const crypto = require("crypto");
 
-const getConnectionForm = (req, res) => {
-  if (req.session.userLogged) {
-    res.redirect("/contact");
+const getHome = (req, res) => {
+  if (!req.session.userLogged) {
+    res.render("connection");
     return;
   }
 
-  res.render("connection");
+  Contact.find()
+    .then((contacts) => {
+      res.render("home", { contacts: contacts });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const logUser = async (req, res) => {
+  // Exit if already logged
+  if (req.session.userLogged) return;
+
   const errors = [];
   const email = req.body.email;
   const password = req.body.password;
@@ -45,9 +55,12 @@ const logUser = async (req, res) => {
   }
 
   // Password validation
-  const validPassword = await bcrypt.compare(password, user[0].password);
+  const cryptedPassword = crypto
+    .createHmac("sha512", process.env.CRYPTO_SECRET_KEY)
+    .update(password)
+    .digest("base64");
 
-  if (!validPassword) {
+  if (cryptedPassword !== user[0].password) {
     errors.push("Email ou mot de passe incorrect.");
 
     res.render("connection", {
@@ -65,7 +78,7 @@ const logUser = async (req, res) => {
 
 const logoutUser = (req, res) => {
   req.session.userLogged = null;
-  res.redirect("/connection");
+  res.redirect("/");
 };
 
-module.exports = { getConnectionForm, logUser, logoutUser };
+module.exports = { getHome, logUser, logoutUser };

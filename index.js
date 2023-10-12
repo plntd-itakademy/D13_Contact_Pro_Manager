@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("cookie-session");
-const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const User = require("./models/user");
 
 const userRoutes = require("./routes/userRoutes");
@@ -26,8 +26,10 @@ async function createDemoUser(lastname, firstname, email, password) {
   const existingUser = await User.find({ email: email });
   if (existingUser.length > 0) return;
 
-  const saltRounds = 10;
-  const cryptedPassword = await bcrypt.hash(password, saltRounds);
+  const cryptedPassword = crypto
+    .createHmac("sha512", process.env.CRYPTO_SECRET_KEY)
+    .update(password)
+    .digest("base64");
 
   const user = new User({
     lastname: lastname,
@@ -47,15 +49,6 @@ app.use(session({ secret: process.env.SESSION_SECRET_KEY }));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-// Redirect the user on connection page is not logged
-app.use((req, res, next) => {
-  if (!req.session.userLogged && req.url !== "/connection") {
-    res.redirect("/connection");
-  } else {
-    next();
-  }
-});
 
 app.use("/", userRoutes);
 app.use("/contact", contactRoutes);

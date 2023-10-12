@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-// Sector = Industrie, Informatique, Santé, Education
-
 const contactSchema = mongoose.Schema({
   lastname: {
     type: String,

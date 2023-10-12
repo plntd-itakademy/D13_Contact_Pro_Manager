@@ -44,6 +44,7 @@ const checkContactInputs = (req) => {
   }
 
   const sectors = ["industrie", "informatique", "sante", "education"];
+
   if (
     typeof sector === "undefined" ||
     sector === "" ||
@@ -58,7 +59,7 @@ const checkContactInputs = (req) => {
 const getContacts = (req, res) => {
   // Redirect user if not logged
   if (!req.session.userLogged) {
-    res.redirect("/connection");
+    res.redirect("/");
     return;
   }
 
@@ -74,7 +75,7 @@ const getContacts = (req, res) => {
 const getNewContact = (req, res) => {
   // Redirect user if not logged
   if (!req.session.userLogged) {
-    res.redirect("/connection");
+    res.redirect("/");
     return;
   }
 
@@ -84,7 +85,7 @@ const getNewContact = (req, res) => {
 const postNewContact = (req, res) => {
   // Redirect user if not logged
   if (!req.session.userLogged) {
-    res.redirect("/connection");
+    res.redirect("/");
     return;
   }
 
@@ -121,7 +122,7 @@ const postNewContact = (req, res) => {
   contact
     .save()
     .then(() => {
-      res.redirect("/contact");
+      res.redirect("/");
     })
     .catch((err) => {
       res.render("add-item", {
@@ -135,7 +136,7 @@ const postNewContact = (req, res) => {
 const viewContact = (req, res) => {
   // Redirect user if not logged
   if (!req.session.userLogged) {
-    res.redirect("/connection");
+    res.redirect("/");
     return;
   }
 
@@ -153,7 +154,7 @@ const viewContact = (req, res) => {
 const getEditContact = (req, res) => {
   // Redirect user if not logged
   if (!req.session.userLogged) {
-    res.redirect("/connection");
+    res.redirect("/");
     return;
   }
 
@@ -164,14 +165,14 @@ const getEditContact = (req, res) => {
       res.render("edit-item", { contact: contact });
     })
     .catch(() => {
-      res.redirect("/contact");
+      res.redirect("/");
     });
 };
 
 const postEditContact = async (req, res) => {
   // Redirect user if not logged
   if (!req.session.userLogged) {
-    res.redirect("/connection");
+    res.redirect("/");
     return;
   }
 
@@ -180,7 +181,7 @@ const postEditContact = async (req, res) => {
   const contact = await Contact.findById(id);
 
   if (!contact) {
-    res.redirect("/contact");
+    res.redirect("/");
     return;
   }
 
@@ -203,7 +204,7 @@ const postEditContact = async (req, res) => {
   contact
     .save()
     .then(() => {
-      res.redirect("/contact");
+      res.redirect("/");
     })
     .catch((err) => {
       console.log(err);
@@ -213,7 +214,7 @@ const postEditContact = async (req, res) => {
 const deleteContact = async (req, res) => {
   const id = req.params.id;
   await Contact.findByIdAndDelete(id).catch(() => null);
-  res.redirect("/contact");
+  res.redirect("/");
 };
 
 module.exports = {

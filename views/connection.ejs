@@ -24,10 +24,10 @@
                         </ul>
                     </div>
                 <% } %>
-                <form class="card-body" id="edit-car-form" method="post" action="/connection">
+                <form class="card-body" id="edit-car-form" method="post" action="/">
                     <div class="mb-3">
                         <label for="lastName" class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Email"<%= typeof email !== "undefined" && ` value=${email}` %>>
                     </div>
 
                     <div class="mb-3">
