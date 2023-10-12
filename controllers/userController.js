@@ -2,9 +2,18 @@ const User = require("../models/user");
 const Contact = require("../models/contact");
 const crypto = require("crypto");
 
-const getHome = (req, res) => {
+function getConnection(req, res) {
+  if (req.session.userLogged) {
+    res.redirect("/");
+    return;
+  }
+
+  res.render("connection");
+}
+
+function getHome(req, res) {
   if (!req.session.userLogged) {
-    res.render("connection");
+    res.redirect("/connection");
     return;
   }
 
@@ -15,9 +24,9 @@ const getHome = (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-};
+}
 
-const logUser = async (req, res) => {
+async function logUser(req, res) {
   // Exit if already logged
   if (req.session.userLogged) return;
 
@@ -74,11 +83,11 @@ const logUser = async (req, res) => {
   req.session.userLogged = user[0].id;
 
   res.redirect("/");
-};
+}
 
-const logoutUser = (req, res) => {
+function logoutUser(req, res) {
   req.session.userLogged = null;
-  res.redirect("/");
-};
+  res.redirect("/connection");
+}
 
-module.exports = { getHome, logUser, logoutUser };
+module.exports = { getConnection, getHome, logUser, logoutUser };

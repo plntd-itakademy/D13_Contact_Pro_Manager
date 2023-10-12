@@ -1,6 +1,6 @@
 const Contact = require("../models/contact");
 
-const checkContactInputs = (req) => {
+function checkContactInputs(req) {
   const errors = [];
 
   const lastname = req.body.lastName;
@@ -54,15 +54,9 @@ const checkContactInputs = (req) => {
   }
 
   return errors;
-};
+}
 
-const getContacts = (req, res) => {
-  // Redirect user if not logged
-  if (!req.session.userLogged) {
-    res.redirect("/");
-    return;
-  }
-
+function getContacts(req, res) {
   Contact.find()
     .then((contacts) => {
       res.render("home", { contacts: contacts });
@@ -70,25 +64,13 @@ const getContacts = (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-};
+}
 
-const getNewContact = (req, res) => {
-  // Redirect user if not logged
-  if (!req.session.userLogged) {
-    res.redirect("/");
-    return;
-  }
-
+function getNewContact(req, res) {
   res.render("add-item");
-};
+}
 
-const postNewContact = (req, res) => {
-  // Redirect user if not logged
-  if (!req.session.userLogged) {
-    res.redirect("/");
-    return;
-  }
-
+function postNewContact(req, res) {
   const errors = checkContactInputs(req);
 
   if (errors.length > 0) {
@@ -131,51 +113,42 @@ const postNewContact = (req, res) => {
         ],
       });
     });
-};
+}
 
-const viewContact = (req, res) => {
-  // Redirect user if not logged
-  if (!req.session.userLogged) {
-    res.redirect("/");
-    return;
-  }
-
+function viewContact(req, res) {
   const id = req.params.id;
 
   Contact.findById(id)
     .then((contact) => {
-      res.render("item", { contact: contact });
+      if (contact) {
+        res.render("item", { contact: contact });
+      } else {
+        res.redirect("/");
+      }
     })
     .catch((err) => {
-      res.redirect("/contact");
+      res.redirect("/");
     });
-};
+}
 
-const getEditContact = (req, res) => {
-  // Redirect user if not logged
-  if (!req.session.userLogged) {
-    res.redirect("/");
-    return;
-  }
-
+function getEditContact(req, res) {
   const id = req.params.id;
 
   Contact.findById(id)
     .then((contact) => {
+      if (!contact) {
+        res.redirect("/");
+        return;
+      }
+
       res.render("edit-item", { contact: contact });
     })
     .catch(() => {
       res.redirect("/");
     });
-};
+}
 
-const postEditContact = async (req, res) => {
-  // Redirect user if not logged
-  if (!req.session.userLogged) {
-    res.redirect("/");
-    return;
-  }
-
+async function postEditContact(req, res) {
   const id = req.params.id;
 
   const contact = await Contact.findById(id);
@@ -209,13 +182,13 @@ const postEditContact = async (req, res) => {
     .catch((err) => {
       console.log(err);
     });
-};
+}
 
-const deleteContact = async (req, res) => {
+async function deleteContact(req, res) {
   const id = req.params.id;
   await Contact.findByIdAndDelete(id).catch(() => null);
   res.redirect("/");
-};
+}
 
 module.exports = {
   getContacts,
